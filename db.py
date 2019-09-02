@@ -1,12 +1,13 @@
 import pymongo
 import os
 import uuid
+import hashlib
 
 client = pymongo.MongoClient(os.environ["MONGO"],connect=False)
 db = client.auth
 
 def verify_credential(email,password):
-    ms = db.credentials.find_one({"email":email,"password":password})
+    ms = db.credentials.find_one({"email":email,"password":hashlib.sha256(password.encode())})
     if ms:
         return True
     return False
@@ -14,14 +15,14 @@ def verify_credential(email,password):
 def add_credential(email,password):
     credential = {
         "email":email,
-        "password":password
+        "password":hashlib.sha256(password.encode())
     }
     db.credentials.insert_one(credential)
 
 def update_credential(email,password):
     credential = {
         "email":email,
-        "password":password
+        "password":hashlib.sha256(password.encode())
     }
     db.credentials.find_one_and_replace({"email":email},credential)
 
