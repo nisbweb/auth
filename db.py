@@ -43,6 +43,12 @@ def get_auth(email):
             auths_list.append(a["token"])
     return auths_list
 
+def verify_auth(token):
+    if db.auths.find_one({"token":token}):
+        return True
+    else:
+        return False
+    
 
 def delete_all_auth(email):
     db.auths.delete({"email":email})

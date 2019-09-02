@@ -13,8 +13,12 @@ def index():
 @app.route("/auth", methods=["GET","POST","DELETE"])
 def auth_controller():
     if request.method=="GET":
-        auths = get_auth(request.args.get("email"))
-        return jsonify(auths)
+        auth = request.args.get("auth")
+        if verify_auth(auth):
+            return jsonify({"status":"ok"})
+        else:
+            return jsonify({"status":"error","error":"invalid token"}),403
+        
 
     elif request.method=="POST":
         req = request.get_json()
