@@ -48,7 +48,7 @@ def credential_controller():
         j = request.get_json()
         email = j["email"]
         password = j["password"]
-        update_credential(email,password)
+        add_credential(email,password)
         return jsonify({"status":"ok"})
 
 
