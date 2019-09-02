@@ -2,7 +2,7 @@ import pymongo
 import os
 import uuid
 
-client = pymongo.MongoClient(os.environ["MONGO"])
+client = pymongo.MongoClient(os.environ["MONGO"],connect=False)
 db = client.auth
 
 def verify_credential(email,password):
