@@ -46,8 +46,12 @@ def credential_controller():
         j = request.get_json()
         email = j["email"]
         password = j["password"]
-        update_credential(email,password)
-        return jsonify({"status":"ok"})
+        oldpassword = j["oldpassword"]
+        if verify_credential(email,oldpassword):
+            update_credential(email,password)
+            return jsonify({"status":"ok"})
+        else:
+            return jsonify({"status":"error","error":"old password is wrong"}),403
 
     elif request.method=="POST":
         j = request.get_json()
