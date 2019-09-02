@@ -19,7 +19,7 @@ def auth_controller():
     elif request.method=="POST":
         req = request.get_json()
         if verify_credential(req["email"],req["password"]):
-            token = add_auth(["email"])
+            token = add_auth(req["email"])
             return jsonify({"status":"ok","auth":token})
         else:
             return jsonify({"error":"wrong credentials","status":"error"})
