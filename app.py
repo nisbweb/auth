@@ -30,6 +30,7 @@ def auth_controller():
             delete_all_auth(request.args.get("email"))
         else:
             delete_auth(request.args.get("auth"))
+        return jsonify({"status":"ok"})
 
 
 @app.route("/credential", methods=["GET","PUT","POST"])
