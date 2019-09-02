@@ -38,17 +38,19 @@ def credential_controller():
         pass
 
     elif request.method=="PUT":
-        email = request.args.get("email")
-        password = request.args.get("password")
+        j = request.get_json()
+        email = j["email"]
+        password = j["password"]
         update_credential(email,password)
         return jsonify({"status":"ok"})
 
     elif request.method=="POST":
-        email = request.args.get("email")
-        password = request.args.get("password")
+        j = request.get_json()
+        email = j["email"]
+        password = j["password"]
         update_credential(email,password)
         return jsonify({"status":"ok"})
-          
+
 
 if __name__ == '__main__':
     # session["login"] = False
