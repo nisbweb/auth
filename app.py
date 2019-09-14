@@ -61,6 +61,8 @@ def credential_controller():
         j = request.get_json()
         email = j["email"]
         password = j["password"]
+        if check_credentials_exist(email):
+            return jsonify({"status":"error","error":"credentials already exist."})
         add_credential(email,password)
         return jsonify({"status":"ok"})
 
