@@ -27,6 +27,12 @@ def update_credential(email,password):
     db.credentials.find_one_and_replace({"email":email},credential)
 
 
+def check_credentials_exist(email):
+    if db.credentials.find_one({"email":email}):
+        return True
+    else:
+        return False
+
 
 def add_auth(email):
     token = uuid.uuid4().hex

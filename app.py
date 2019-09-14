@@ -42,7 +42,9 @@ def auth_controller():
 @app.route("/credential", methods=["GET","PUT","POST"])
 def credential_controller():
     if request.method=="GET": # verify
-        pass
+        #check if creds exist
+        c = check_credentials_exist(request.args.get("email"))
+        return jsonify({"exists":c})
 
     elif request.method=="PUT":
         j = request.get_json()
