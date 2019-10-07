@@ -4,3 +4,4 @@ gunicorn
 dnspython
 requests
 flask-cors
+yagmail

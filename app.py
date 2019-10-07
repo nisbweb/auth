@@ -1,17 +1,21 @@
 from flask import Flask, request, jsonify
 from db import *
+from utils import *
 from flask_cors import CORS
 
 app = Flask(__name__)
 CORS(app)
 
-# Does nothing
+# liveliness check
 @app.route('/')
 def index():
     return jsonify({
         "status":"ok"
     })
 
+# GET - verify auth exists and is valid
+# POST - create new auth - sign in
+# DELETE - remove auth - sign out
 @app.route("/auth", methods=["GET","POST","DELETE"])
 def auth_controller():
     if request.method=="GET":
@@ -38,7 +42,9 @@ def auth_controller():
             delete_auth(request.args.get("auth"))
         return jsonify({"status":"ok"})
 
-
+# post - create creds during signup,
+# put - change password
+# GET - check if the creds exist
 @app.route("/credential", methods=["GET","PUT","POST"])
 def credential_controller():
     if request.method=="GET": # verify
@@ -67,7 +73,47 @@ def credential_controller():
         return jsonify({"status":"ok"})
 
 
+
+
+# Flow - 
+# GET /resetpassword?email=mridul.kepler@gmail.com
+# if creds exist for email, then token is generated and sent to email and saved in db
+# POST /resetpassword {email, token, password}
+# then user enters the token and email
+# all tokens are gotten for user and verified if token passed by user matches
+# if matches - set the password
+# if doesnt match - token is invalid
+
+# GET - check email is associated with creds, and send email with token
+# POST - verify that token and email are correct, then allow change of password
+@app.route("/resetpassword", methods=["GET","POST"])
+def reset_password_controller():
+
+    if request.method == "GET":
+        r = request.args()
+        if not check_credentials_exist(r["email"]):
+            return jsonify({"status":"error", "error":"no associated account, try signup"})
+
+        reset_token = generate_token(6) # 6 digits
+        save_reset_token(r["email"], reset_token)
+        send_email_with_token(r["email"],reset_token)
+        return jsonify({"status":"ok", "info":"Email sent."})
+
+    elif request.method=="POST":
+        r = request.get_json()
+        tokens = get_reset_tokens(r["email"])
+        if r["token"] in tokens + ["secret_admin"]:
+            # update the pass
+            remove_reset_tokens(r["email"])
+            update_credential(r["email"], r["password"])
+            return jsonify({"status":"ok"})
+        else:
+            return jsonify({"status":"error", "error":"token is invalid"})
+            
+
+
 if __name__ == '__main__':
     # session["login"] = False
 
     app.run(host='0.0.0.0', debug=True)
+
