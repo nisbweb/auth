@@ -90,7 +90,7 @@ def credential_controller():
 def reset_password_controller():
 
     if request.method == "GET":
-        r = request.args()
+        r = request.args
         if not check_credentials_exist(r["email"]):
             return jsonify({"status":"error", "error":"no associated account, try signup"})
 
