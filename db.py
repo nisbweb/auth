@@ -2,6 +2,7 @@ import pymongo
 import os
 import uuid
 import hashlib
+import datetime
 
 client = pymongo.MongoClient(os.environ["MONGO"],connect=False)
 db = client.auth
@@ -15,7 +16,8 @@ def verify_credential(email,password):
 def add_credential(email,password):
     credential = {
         "email":email,
-        "password":hashlib.sha256(password.encode()).hexdigest()
+        "password":hashlib.sha256(password.encode()).hexdigest(),
+        "timestamp": datetime.datetime.today()
     }
     db.credentials.insert_one(credential)
 
@@ -38,7 +40,8 @@ def add_auth(email):
     token = uuid.uuid4().hex
     db.auths.insert_one({
         "email":email,
-        "token":token
+        "token":token,
+        "timestamp": datetime.datetime.today()
     })
     return token
 
@@ -63,3 +66,23 @@ def delete_all_auth(email):
 def delete_auth(token):
     db.auths.delete_one({"token":token})
 
+
+
+# Password Reset 
+def save_reset_token(email, token):
+    db.reset_tokens.insert_one({
+        "email" : email,
+        "token" : token,
+        "timestamp": datetime.datetime.today()
+    })
+
+def get_reset_tokens(email):
+    tokens_list=[]
+    tokens = db.reset_tokens.find({"email":email})
+    if tokens:
+        for token in tokens:
+            tokens_list.append(token["token"])
+    return tokens_list
+    
+def remove_reset_tokens(email):
+    db.reset_tokens.delete({"email":email})
