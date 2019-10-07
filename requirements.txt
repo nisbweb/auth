@@ -1,5 +1,5 @@
 flask
-pymongopymongo==3.9.0
+pymongo==3.9.0
 gunicorn
 dnspython
 requests
