@@ -1,0 +1,11 @@
+sudo: false  # http://docs.travis-ci.com/user/migrating-from-legacy/
+language: python
+python:
+  - 3.6
+install: pip install -r requirements.txt
+before_script:
+  - export MONGO="mongokey"
+  - export EMAIL_USERNAME="u"
+  - export EMAIL_PASSWORD="p"
+
+script: python tests.py
