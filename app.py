@@ -36,7 +36,7 @@ def auth_controller():
     
     
     elif request.method=="DELETE":
-        if request.args.get("all",False) == True:
+        if request.args.get("all","").lower() == "true":
             delete_all_auth(request.args.get("email"))
         else:
             delete_auth(request.args.get("auth"))
