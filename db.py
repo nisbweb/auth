@@ -61,7 +61,7 @@ def verify_auth(token):
     
 
 def delete_all_auth(email):
-    db.auths.delete({"email":email})
+    db.auths.delete_many({"email":email})
 
 def delete_auth(token):
     db.auths.delete_one({"token":token})
@@ -85,4 +85,4 @@ def get_reset_tokens(email):
     return tokens_list
     
 def remove_reset_tokens(email):
-    db.reset_tokens.delete({"email":email})
+    db.reset_tokens.delete_many({"email":email})
