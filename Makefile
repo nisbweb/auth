@@ -9,7 +9,7 @@ lint: requirements
 .PHONY: lint
 
 requirements:
-	pip install -r requirements
+	pip install -r requirements.txt
 
 test: requirements
 	python tests.py
