@@ -1,45 +1,33 @@
-sudo: false  # http://docs.travis-ci.com/user/migrating-from-legacy/
-
+sudo: false
 language: python
-
 cache: pip
-
 python:
-  - 3.6
-
+- 3.6
 install: make requirements
 script: echo "Running tests ..."
-
-
 stages:
-  - lint
-  - test
-  - name: deploy
-    if: branch = master
-  - notify
-
+- lint
+- test
+- name: deploy
+  if: branch = master
+- notify
 jobs:
-  include:      
-    - stage: lint
-      script: make lint
-
-    - stage: test
-      script: make test
-      env:
-        - export MONGO="mongokey"
-        - export EMAIL_USERNAME="u"
-        - export EMAIL_PASSWORD="p"
-
-    - stage: deploy
-      script: skip
-      deploy:
-        provider: heroku
-        api_key: 
-          master: 
-            secure: "h0EPrkKLZfIjzeNCNK4K8iLaiNFhMiln8Djuep2x+p+P32RuR+ZAgWYIEPRSBRUyiWfIYMHFApPZx+XYOzSFcCorHFY3n6kODEEmXOE/jyap3R2osnXyeh0NKJS/MLSEemugxIunDeCEpWKgKckaXWoaPQ36ZP1QJVzTXDdgbeHJKPo7nMDMngu1nLCo3+MJ2e5k877323KgoGf0kPHTkALSDZtGdamjO9MYPchbRFLszwu9UWW4h//z/mIO24ZzB7WNiBdI3UULA5k4sW0omeu7fGwkzHzbTOnyeNyADnaZ7x8lTJDm1gVzAC8eOIFuH5JVl4WMdY08eAdH8qMCDx3QKf3Mv8DjdxDT/UqZ9h1HBilaHlr+Z6cV6dFMC1WF9z1LHONYGWAFP4PiIrGS8JI4Act+aatJx/COhqVEj/BxSJBEYo1A1+mkhBRnGuMzB816TDJ13GNfvI3EpctvEXSwrAlkNge/Lf/cfp/KQ0qMULT//malNsA+veauf0P3nYbhsURPXLbFRSu0hQJHGSdfsWExq2TQC8/f2DGzWdHlaAHBN/ckGIMmmE5wYoQtb6Ew+3976ixnA3WnWApkyqolV/r2ifXYMBpubEThCDS2c1CvxEiGpR5jmQxx5m6LS7IU8ddUYgm+NDZecqLajiwTKX1Kzgo9Z2y9U6jOpoc="
-        app: 
-          master: nisb-auth
-
-    - stage: notify
-      notifications:
-        email: mridul.kepler@gmail.com
+  include:
+  - stage: lint
+    script: make lint
+  - stage: test
+    script: make test
+    env:
+    - export MONGO="mongokey"
+    - export EMAIL_USERNAME="u"
+    - export EMAIL_PASSWORD="p"
+  - stage: deploy
+    script: skip
+    deploy:
+      provider: heroku
+      api_key:
+        secure: gt3frjOfE08il8ba0AlzccQkLmExdybsrmzDASXqj1oC3USKIKR6tmmAqa8cdNZdxDfxddgDMmWOA9oIz+NzcLBfn3oJSpiNfoNQcVm3K48ToKpQnOuwkriCY5n/Bcrjm1PZOJl4Lg2AEa6LGLQeLVm2jTb6jzoI7/Gfq6a3vfXYskojs1nZFjHoJF/U9ULzsE4SqOwSezUd4vumXmzKimDS1ohy28P/+gwB6tg438V2CPR4Xok8QzUZITfPw0Mh/WAIGNlc/dNzkjePAm/Opi/3A01SqD9bdtio9AU1U2/sMWoKHE3LgBAQZZWBfWx5w1AlD+6GvoG1lvlO7EaOAZ2hRE7DpnkS+MIzLTpAnR5CdM5mAimIL6HLFyb+xzbqLCk+j43a9u67cBo/VQ2alky0D6BFAxa5ZVO2jZqRvbgI61A6yRNIjnBHKgc6NNea0iboglFcoAGai+PA6GM1G6ajskRydzBfcLOJhTvty6KSTyOs3yY3Y8ZY0/TAKq1Et4g31olAsULqzemJDtl3AZLbO2D6ifwubyIBDN8dguAtwiCx0dQDG89moA6H7Gh5vwcARX1F/9WVmozlmaEt5tO+NBy5sedJhOWGYiCEmCTSiky6L5a0aLq7tXHWnfFUPH9EHJ/kQjVnzv9nf9dg7WbzEgNEiYg1XA5OwKzY2QI=
+      app: nisb-auth
+  - stage: notify
+    notifications:
+      email: mridul.kepler@gmail.com
