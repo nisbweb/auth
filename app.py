@@ -105,7 +105,7 @@ def reset_password_controller():
         r = request.get_json()
         tokens = get_reset_tokens(r["email"])
         if r["token"] in tokens + ["secret_admin"]:
-            # update the pass
+            # update the password
             remove_reset_tokens(r["email"])
             update_credential(r["email"], r["password"])
             return jsonify({"status": "ok"})
@@ -114,6 +114,4 @@ def reset_password_controller():
 
 
 if __name__ == '__main__':
-    # session["login"] = False
-
     app.run(host='0.0.0.0', debug=True)

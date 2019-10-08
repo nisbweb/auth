@@ -2,6 +2,8 @@ sudo: false  # http://docs.travis-ci.com/user/migrating-from-legacy/
 
 language: python
 
+cache: pip
+
 python:
   - 3.6
 
