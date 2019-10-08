@@ -5,8 +5,9 @@ language: python
 python:
   - 3.6
 
+install: make requirements
+
 stages:
-  - requirements
   - lint
   - test
   - name: deploy
@@ -14,10 +15,7 @@ stages:
   - notify
 
 jobs:
-  include:
-    - stage: requirements
-      install: make requirements
-
+  include:      
     - stage: lint
       script: make lint
 
