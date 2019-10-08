@@ -5,22 +5,21 @@ python:
 - 3.6
 install: make requirements
 script: echo "Running tests ..."
+
 stages:
-- lint
-- test
+- basic
 - name: deploy
   if: branch = master
 - notify
+
 jobs:
   include:
-  - stage: lint
+  - stage: basic
     script: make lint
-  - stage: test
-    script: make test
-    env:
-    - export MONGO="mongokey"
-    - export EMAIL_USERNAME="u"
-    - export EMAIL_PASSWORD="p"
+    name: "Linting"
+  - script: make test
+    name: "Unit Tests"
+    
   - stage: deploy
     script: skip
     deploy:
