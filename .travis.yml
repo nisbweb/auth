@@ -35,7 +35,8 @@ jobs:
       deploy:
         provider: heroku
         api_key: 
-          master: $HEROKU
+          master: 
+            secure: "h0EPrkKLZfIjzeNCNK4K8iLaiNFhMiln8Djuep2x+p+P32RuR+ZAgWYIEPRSBRUyiWfIYMHFApPZx+XYOzSFcCorHFY3n6kODEEmXOE/jyap3R2osnXyeh0NKJS/MLSEemugxIunDeCEpWKgKckaXWoaPQ36ZP1QJVzTXDdgbeHJKPo7nMDMngu1nLCo3+MJ2e5k877323KgoGf0kPHTkALSDZtGdamjO9MYPchbRFLszwu9UWW4h//z/mIO24ZzB7WNiBdI3UULA5k4sW0omeu7fGwkzHzbTOnyeNyADnaZ7x8lTJDm1gVzAC8eOIFuH5JVl4WMdY08eAdH8qMCDx3QKf3Mv8DjdxDT/UqZ9h1HBilaHlr+Z6cV6dFMC1WF9z1LHONYGWAFP4PiIrGS8JI4Act+aatJx/COhqVEj/BxSJBEYo1A1+mkhBRnGuMzB816TDJ13GNfvI3EpctvEXSwrAlkNge/Lf/cfp/KQ0qMULT//malNsA+veauf0P3nYbhsURPXLbFRSu0hQJHGSdfsWExq2TQC8/f2DGzWdHlaAHBN/ckGIMmmE5wYoQtb6Ew+3976ixnA3WnWApkyqolV/r2ifXYMBpubEThCDS2c1CvxEiGpR5jmQxx5m6LS7IU8ddUYgm+NDZecqLajiwTKX1Kzgo9Z2y9U6jOpoc="
         app: 
           master: nisb-auth
 
