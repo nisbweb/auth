@@ -10,5 +10,12 @@ before_script:
 
 script: python tests.py
 
+deploy:
+  provider: heroku
+  api_key: 
+    master: $HEROKU
+  app: 
+    master: nisb-auth
+
 notifications:
   email: mridul.kepler@gmail.com
