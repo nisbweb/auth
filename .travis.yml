@@ -5,29 +5,25 @@ python:
 - 3.6
 install: make requirements
 script: echo "Running tests ..."
-
 stages:
 - basic
 - name: deploy
   if: branch = master
 - notify
-
 jobs:
   include:
   - stage: basic
     script: make lint
-    name: "Linting"
+    name: Linting
   - script: make test
-    name: "Unit Tests"
-    
+    name: Unit Tests
   - stage: deploy
     script: skip
     deploy:
       provider: heroku
       api_key:
-        secure: VyypCGNYoqc1o61RWtr/YIUi1r7nSgpRVZYsWqc6A/AALD7qgiJpcDixPSXrE3SFm2WuANDva/p3R42hKG0JvEhz8pTF73Kac/0A3LgkMP+6izgTuvd8M0xq9t/mCqrE1TucuxP5U+FIBImbqGt0XVWFzDF0IPR1qNs5OQxysTUQSpQ24QD/3H65MA71y97f5Q5cS0sFBiqlK3uDxvAYbanJ8E6Nk1Zhc6yQV2Ou22sqXbjZpfQudYXz+q937O9RL3XUibVuQEOZSxZ/WhtwRb2R6ytrlumBrDkqes9HIP/pSH2Gy/ZnYOLVzo3M56nL88nJdcBIbuV2WQFPnBSDsPLKFvVphP1CFzKWDql5RH9enIOng0QpKxJx8ewX8HTRyZG7SXIGQWD/ApcKT3bIZb8kMBLynKghD6HjcOycwAX8NjuEYzUmSGRpZvPcavQU4Etffa5A5ODjylotDW69a6z2CmDzbmCtbiBy33M6PBNHy/yQk/H2k5BEHu1GU0svvdSSFvhuBdX++NsNMJXouhf/l88KUxKRNirD9n4r2xeuspfUHdUmiI+lErAIm1ovjfy2yms1YpvArDZ71llq7lWmgCR3k3BBH5qXzMaHQ2vmXQkDcgNprg7xda7lWajNH5qeGJsmOZhrIpx2uhFci5Bd/iqPoD7vakLsbtcRZ1o=
+        secure: PIKAwRo/Ya7E909gCcrlYeQIaAuD/Oi0ve4nmK2K33+IXPuxTeeIOKkNOnXQwAo4Lxk0ZcNpcUXuEMqOwadstnWWLNtfjfWCp7Il1yG8seLE1cinJPfyM1gG754Do6SULaY2VZMQM3q53ktXzkr3zePfVojeRDVzjZJTYM8fE07/0bfDEeCkTVIblCN3FlNP5/vBd/gNHcQabhu/w7UVogAqH3gv+rrKvswwCFDNWyIqbr8/0lYCoZHpa56s1+n1kybWaiZrBA1qWykiud51goHW4kV+wuCX/BTz5AUUlyDnZ6Bzpp1kcW1m3lltkyQNrsRjrdshNt81Q0/h5rCDHoGACRp3/FHMUWAiAAG6c+kWnRBCNwskOO0o0VWsJms1wj9b9TzDDAypqGDXw6zb0arSkI4ln9w372QauXeKVVFKwXN5KI93DZOc3L9CeXRQcUZkP7i/2cxN6TXvVQL7V0X7y7LoMaEI6dzCOouifz/hfUUPVjxoRA5gz0Yq5iixqO2dDMFRvcfx/HeOPU8B2O5iL59EM5NmzuFVlaqn/o/42G1JAZytYOZKJUVxedWhbGwnI7cyacA7skFpnwMhcrHY3bfo8LyiUIDsZAgFpnCoD7SOydcvLaC5YJIYds+4AFOZB7zApp9Rj9ANHY/H6Mg4T2giRD/hg9TzbCJgjs4=
       app: nisb-auth
   - stage: notify
     notifications:
       email: mridul.kepler@gmail.com
-
