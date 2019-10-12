@@ -27,3 +27,7 @@ jobs:
   - stage: notify
     notifications:
       email: mridul.kepler@gmail.com
+
+branches:
+  only: 
+    - master
