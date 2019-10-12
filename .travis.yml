@@ -1,29 +1,30 @@
-sudo: false
 language: python
+
+sudo: false
 cache: pip
+
 python:
 - 3.6
-install: make requirements
-script: echo "Running tests ..."
-stages:
-- basic
-- name: deploy
-  if: branch = master
-- notify
-jobs:
-  include:
-  - stage: basic
-    script: make lint
-    name: Linting
-  - script: make test
-    name: Unit Tests
-  - stage: deploy
-    script: skip
-    deploy:
-      provider: heroku
-      api_key:
-        secure: PIKAwRo/Ya7E909gCcrlYeQIaAuD/Oi0ve4nmK2K33+IXPuxTeeIOKkNOnXQwAo4Lxk0ZcNpcUXuEMqOwadstnWWLNtfjfWCp7Il1yG8seLE1cinJPfyM1gG754Do6SULaY2VZMQM3q53ktXzkr3zePfVojeRDVzjZJTYM8fE07/0bfDEeCkTVIblCN3FlNP5/vBd/gNHcQabhu/w7UVogAqH3gv+rrKvswwCFDNWyIqbr8/0lYCoZHpa56s1+n1kybWaiZrBA1qWykiud51goHW4kV+wuCX/BTz5AUUlyDnZ6Bzpp1kcW1m3lltkyQNrsRjrdshNt81Q0/h5rCDHoGACRp3/FHMUWAiAAG6c+kWnRBCNwskOO0o0VWsJms1wj9b9TzDDAypqGDXw6zb0arSkI4ln9w372QauXeKVVFKwXN5KI93DZOc3L9CeXRQcUZkP7i/2cxN6TXvVQL7V0X7y7LoMaEI6dzCOouifz/hfUUPVjxoRA5gz0Yq5iixqO2dDMFRvcfx/HeOPU8B2O5iL59EM5NmzuFVlaqn/o/42G1JAZytYOZKJUVxedWhbGwnI7cyacA7skFpnwMhcrHY3bfo8LyiUIDsZAgFpnCoD7SOydcvLaC5YJIYds+4AFOZB7zApp9Rj9ANHY/H6Mg4T2giRD/hg9TzbCJgjs4=
-      app: nisb-auth
-  - stage: notify
-    notifications:
-      email: mridul.kepler@gmail.com
+
+install: 
+  - echo "Installing Requirements"
+  - pip install -r requirements.txt
+
+script: 
+  - echo "Running tests ..."
+  - pycodestyle *.py
+  - python tests.py
+
+deploy:
+  provider: heroku
+  api_key:
+    secure: PIKAwRo/Ya7E909gCcrlYeQIaAuD/Oi0ve4nmK2K33+IXPuxTeeIOKkNOnXQwAo4Lxk0ZcNpcUXuEMqOwadstnWWLNtfjfWCp7Il1yG8seLE1cinJPfyM1gG754Do6SULaY2VZMQM3q53ktXzkr3zePfVojeRDVzjZJTYM8fE07/0bfDEeCkTVIblCN3FlNP5/vBd/gNHcQabhu/w7UVogAqH3gv+rrKvswwCFDNWyIqbr8/0lYCoZHpa56s1+n1kybWaiZrBA1qWykiud51goHW4kV+wuCX/BTz5AUUlyDnZ6Bzpp1kcW1m3lltkyQNrsRjrdshNt81Q0/h5rCDHoGACRp3/FHMUWAiAAG6c+kWnRBCNwskOO0o0VWsJms1wj9b9TzDDAypqGDXw6zb0arSkI4ln9w372QauXeKVVFKwXN5KI93DZOc3L9CeXRQcUZkP7i/2cxN6TXvVQL7V0X7y7LoMaEI6dzCOouifz/hfUUPVjxoRA5gz0Yq5iixqO2dDMFRvcfx/HeOPU8B2O5iL59EM5NmzuFVlaqn/o/42G1JAZytYOZKJUVxedWhbGwnI7cyacA7skFpnwMhcrHY3bfo8LyiUIDsZAgFpnCoD7SOydcvLaC5YJIYds+4AFOZB7zApp9Rj9ANHY/H6Mg4T2giRD/hg9TzbCJgjs4=
+  app: nisb-auth
+  on: master
+
+notifications:
+  email: mridul.kepler@gmail.com
+
+branches:
+  only: 
+    - master

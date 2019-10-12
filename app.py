@@ -1,3 +1,4 @@
+import sentry
 from flask import Flask, request, jsonify
 from db import *
 from utils import *
